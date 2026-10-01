@@ -1,0 +1,35 @@
+# Compiler files
+cache/
+out/
+
+# Commonly ignored directories
+.logs/
+.ignore/
+
+# Ignores development broadcast logs
+!/broadcast
+/broadcast/*/31337/
+/broadcast/**/dry-run/
+
+# Dotenv file
+.env
+.env.*
+!.env.example
+
+# web
+web/node_modules/
+web/dist/
+web/src/deployments/31337.json
+web/src/tokens/31337.json
+web/*.tsbuildinfo
+
+# IDE
+.idea/
+*.iml
+
+# OS and local tool state
+.DS_Store
+web/.wrangler/
+
+# browser test tool scratch files
+.playwright-mcp/

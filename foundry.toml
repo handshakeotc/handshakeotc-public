@@ -1,0 +1,41 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc = "0.8.30"
+evm_version = "cancun"
+optimizer = true
+optimizer_runs = 10_000
+fs_permissions = [{ access = "write", path = "./web/src/deployments" }]
+remappings = [
+    "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+    "forge-std/=lib/forge-std/src/",
+]
+
+[fuzz]
+runs = 1_000
+
+[invariant]
+runs = 256
+depth = 64
+fail_on_revert = false
+
+[rpc_endpoints]
+mainnet = "${MAINNET_RPC_URL}"
+sepolia = "${SEPOLIA_RPC_URL}"
+arbitrum = "https://arb1.arbitrum.io/rpc"
+base = "https://mainnet.base.org"
+hyperevm = "https://rpc.hypurrscan.io"
+
+[etherscan]
+mainnet = { key = "${ETHERSCAN_API_KEY}" }
+sepolia = { key = "${ETHERSCAN_API_KEY}" }
+# one Etherscan key covers Arbiscan, Basescan and HyperEVMScan too (Etherscan API v2)
+arbitrum = { key = "${ETHERSCAN_API_KEY}", chain = 42161 }
+base = { key = "${ETHERSCAN_API_KEY}", chain = 8453 }
+hyperevm = { key = "${ETHERSCAN_API_KEY}", chain = 999, url = "https://api.etherscan.io/v2/api?chainid=999" }
+
+# Halmos (symbolic tests, test/OtcBoard.halmos.t.sol) does not support the deployCode cheat code that dynamic
+# test linking puts in place of `new`: build without it.   FOUNDRY_PROFILE=halmos halmos --contract OtcBoardSymbolicTest
+[profile.halmos]
+dynamic_test_linking = false
